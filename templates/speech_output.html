@@ -4,15 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>speech output portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-RLj9Fz9ZL7A7JSZ9L3u3EteI5Hgr0CfUrvoMxhE+5eqEZy5oY/BMrh1JQ5iS0ks5O8LUp4R9Hq6YfKv2Kx8VQ==" crossorigin="anonymous" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #936a88;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            display: inline-block;
+            color: #3a5775;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            display: inline-block;
+            color: #333;
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        h2#entered-text {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        h1#lang-code {
+            color: #28a745;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+
+        h2#audio-title {
+            font-size: 1.4em;
+            margin-top: 15px;
+            color: #6c757d;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+
+        hr {
+            border: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .audio-icon {
+            font-size: 2em;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
     <h1> The Entered Text is: </h1>
-    <h3> {{text}} </h3>
+    <h2> {{text}} </h2>
     <h1>The Language Code is : {{lang}}</h1>
-    <h3>The converted Audio</h3>
+    <h1 id="audio-title"><i class="fas fa-volume-up audio-icon"></i> The converted Audio</h1>
     <audio controls autoplay>
-        <source src= "{{ url_for('static', filename='audio/transpeech.mp3') }}" type="audio/mp3">
+        <source src="{{ url_for('static', filename='audio/transpeech.mp3') }}" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 </body>
 </html>
+
