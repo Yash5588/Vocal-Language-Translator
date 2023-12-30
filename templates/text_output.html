@@ -4,12 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text output portal</title>
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #587088;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: hsl(158, 47%, 53%);
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+
+    </style>
 </head>
 <body>
     <h1> The Entered Text is: </h1>
-    <h3> {{text}} </h3>
+    <h2> {{text}} </h2>
     <h1> The Language Code is : {{lang}}</h1>
-    <h3>The Converted Text is:</h3>
-    <h3>{{translated_text}}</h3>
+    <h2>The Converted Text is:</h2>
+    <h2>{{translated_text}}</h2>
 </body>
 </html>
