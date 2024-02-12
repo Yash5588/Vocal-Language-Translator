@@ -9,29 +9,6 @@ import webbrowser
 
 app = Flask(__name__)
 
-engine = pyttsx3.init()
-
-def speak(text, lang="en"):
-    engine.say(text)
-    engine.runAndWait()
-
-def listen():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening...")
-        recognizer.adjust_for_ambient_noise(source)
-        audio = recognizer.listen(source)
-
-    try:
-        print("Recognizing...")
-        query = recognizer.recognize_google(audio)
-        return query
-    except sr.UnknownValueError:
-        print("Sorry, I couldn't understand that.")
-        return ""
-    except sr.RequestError as e:
-        print(f"Could not request results; {e}")
-        return ""
 def text_to_text_translation(desired_language,text):
     url = "https://text-translator2.p.rapidapi.com/translate"
     headers = {
@@ -52,10 +29,7 @@ def text_to_text_translation(desired_language,text):
 
 def speech_to_speech_translation(desired_language):
     print("PLEASE WAIT FOR A MOMENT TO SPEAK")
-    speak("Hello! How can I assist you today?")
 
-    query = listen()
-    print("You said:", query)
 
     url = "https://text-translator2.p.rapidapi.com/translate"
     headers = {
@@ -83,13 +57,8 @@ def speech_to_speech_translation(desired_language):
         
 
 
-def speech_to_text_recognition(desired_language):
-    print("PLEASE WAIT FOR A MOMENT TO SPEAK UNTIL 'LISTENING' WORD APPEARS ON SCREEN")
-    speak("Hello! How can I assist you today?")
-
-    query = listen()
-    print("You said:", query)
-    translated_text = text_to_text_translation(desired_language,query)
+def speech_to_text_recognition(desired_language,text):
+    translated_text = text_to_text_translation(desired_language,text)
     return translated_text
 
 def text_to_speech(desired_language,text):
@@ -97,10 +66,6 @@ def text_to_speech(desired_language,text):
     obj = gTTS(text=translated_text, lang=desired_language, slow=False)
     mp3_file = "static/audio/transpeech.mp3"
     obj.save(mp3_file)
-    #pygame.mixer.init()
-    #sound = pygame.mixer.Sound(mp3_file)
-    #sound.play()
-    #time.sleep(sound.get_length())
 
 @app.route('/')
 
@@ -125,17 +90,20 @@ def submit():
     if(option == '1'):
         text = request.form['text']
         translated_text = text_to_text_translation(desired_language,text)
-        return render_template('text_output.html',translated_text = translated_text,lang = desired_language)
+        return render_template('text_output.html',translated_text = translated_text,lang = desired_language,text= text)
+    elif option == "2":
+        text = request.form['text']
+        text_to_speech(desired_language,text);
+        return render_template("speech_output.html",lang = desired_language,text = text)
+        
+    elif option == "3":
+        text = request.form['text']
+        translated_text = speech_to_text_recognition(desired_language,text)
+        return render_template('text_output.html',lang = desired_language,text = text,translated_text= translated_text)
     elif option == "4":
         text = request.form['text']
         text_to_speech(desired_language,text);
-    return render_template("speech_output.html",lang = desired_language)
-    '''elif option == "2":
-        speech_to_speech_translation(desired_language)
-
-    elif option == "3":
-        translated_text = speech_to_text_recognition(desired_language)
-        print("Translated text = ",translated_text)'''
+        return render_template("speech_output.html",lang = desired_language,text = text)
 
 urll = "http://127.0.0.1:5000"
 webbrowser.open(urll)
