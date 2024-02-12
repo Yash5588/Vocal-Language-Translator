@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Input</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #330033;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23404' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23505'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: azure;
+            margin-top: 20px;
+        }
+        #language {
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #recording-symbol {
+            display: none;
+            margin-top: 10px;
+            text-align: center;
+            color: azure;
+        }
+        form {
+            color: azure;
+            max-width: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            resize: none;
+        }
+    </style>
+    <script>
+        function startRecording() {
+            var language = document.getElementById("language").value;
+            var recognition = new webkitSpeechRecognition();
+            recognition.lang = language;
+            recognition.onstart = function() {
+                $('#recording-symbol').show();
+                document.getElementById('startButton').disabled = true;
+            };
+            recognition.onresult = function(event) {
+                var result = event.results[0][0].transcript;
+                $('#text').val(result);
+            };
+            recognition.onend = function() {
+                $('#recording-symbol').hide();
+                document.getElementById('startButton').disabled = false;
+            };
+            recognition.start();
+        }
+    </script>
+</head>
+<body>
+    <h1>Speech Input</h1>
+    <label for="language">Choose the language for speech input:</label>
+    <select id="language" name="language">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+        <option value="af">Afrikaans</option>
+        <option value="sq">Albanian</option>
+        <option value="am">Amharic</option>
+        <option value="ar">Arabic</option>
+        <option value="hy">Armenian</option>
+        <option value="az">Azerbaijani</option>
+        <option value="eu">Basque</option>
+        <option value="be">Belarusian</option>
+        <option value="bn">Bengali</option>
+        <option value="bs">Bosnian</option>
+        <option value="bg">Bulgarian</option>
+        <option value="ca">Catalan</option>
+        <option value="ceb">Cebuano</option>
+        <option value="ny">Chichewa</option>
+        <option value="zh-CN">Chinese(Simplified)</option>
+        <option value="zh-TW">Chinese(Traditional)</option>
+        <option value="co">Corsican</option>
+        <option value="hr">Croatian</option>
+        <option value="cs">Czech</option>
+        <option value="da">Danish</option>
+        <option value="nl">Dutch</option>
+        <option value="eo">Esperanto</option>
+        <option value="et">Estonian</option>
+        <option value="tl">Filipino</option>
+        <option value="fi">Finnish</option>
+        <option value="fr">French</option>
+        <option value="fy">Frisian</option>
+        <option value="gl">Galician</option>
+        <option value="ka">Georgian</option>
+        <option value="de">German</option>
+        <option value="el">Greek</option>
+        <option value="gu">Gujarati</option>
+        <option value="ht">Haitian Creole</option>
+        <option value="ha">Hausa</option>
+        <option value="haw">Hawaiian</option>
+        <option value="iw">Hebrew</option>
+        <option value="hmn">Hmong</option>
+        <option value="hu">Hungarian</option>
+        <option value="is">Icelandic</option>
+        <option value="ig">Igbo</option>
+        <option value="id">Indonesian</option>
+        <option value="ga">Irish</option>
+        <option value="it">Italian</option>
+        <option value="ja">Japanese</option>
+        <option value="jw">Javanese</option>
+        <option value="kn">Kannada</option>
+        <option value="kk">Kazakh</option>
+        <option value="km">Khmer</option>
+        <option value="rw">Kinyarwanda</option>
+        <option value="ko">Korean</option>
+        <option value="ku">Kurdish</option>
+        <option value="ky">Kyrgyz</option>
+        <option value="lo">Lao</option>
+        <option value="la">Latin</option>
+        <option value="lv">Latvian</option>
+        <option value="lt">Lithuanain</option>
+        <option value="lb">Luxembourgish</option>
+        <option value="mk">Macedonian</option>
+        <option value="mg">Malagasy</option>
+        <option value="ms">Malay</option>
+        <option value="ml">Malayalam</option>
+        <option value="mt">Matlese</option>
+        <option value="mi">Maori</option>
+        <option value="mr">Marathi</option>
+        <option value="mn">Mongolian</option>
+        <option value="my">Myanmar</option>
+        <option value="ne">Nepali</option>
+        <option value="no">Norwegian</option>
+        <option value="or">Oriya</option>
+        <option value="ps">Pashto</option>
+        <option value="fa">Persian</option>
+        <option value="pl">Polish</option>
+        <option value="pt">Portuguese</option>
+        <option value="pa">Punjabi</option>
+        <option value="ro">Romanian</option>
+        <option value="ru">Russian</option>
+        <option value="sm">Samoan</option>
+        <option value="gd">Scots Gaelic</option>
+        <option value="sr">Serbian</option>
+        <option value="st">Sesotho</option>
+        <option value="sn">Shona</option>
+        <option value="sd">Sindhi</option>
+        <option value="si">Sinhala</option>
+        <option value="sk">Slovak</option>
+        <option value="sl">Slovenian</option>
+        <option value="so">Somali</option>
+        <option value="es">Spanish</option>
+        <option value="su">Sundanese</option>
+        <option value="sw">Swahili</option>
+        <option value="sv">Swedish</option>
+        <option value="tg">Tajik</option>
+        <option value="ta">Tamil</option>
+        <option value="tt">Tatar</option>
+        <option value="th">Thai</option>
+        <option value="tr">Turkish</option>
+        <option value="tk">Turkmen</option>
+        <option value="uk">Ukranian</option>
+        <option value="ur">Urdu</option>
+        <option value="ug">Uyghur</option>
+        <option value="uz">Uzbek</option>
+        <option value="vi">Vietnamese</option>
+        <option value="cy">Welsh</option>
+        <option value="xh">Xhosa</option>
+        <option value="yi">Yiddish</option>
+        <option value="yo">Yoruba</option>
+        <option value="zu">Zulu</option>
+        <option value="he">Hebrew</option>
+    </select>
+    <br>
+    <button id="startButton" onclick="startRecording()">Start Recording</button>
+    <div id="recording-symbol">🎤 Recording...</div>
+    <form action="/submit" method="post">
+        <label for="text">Spoken Text:</label>
+        <textarea id="text" name="text" readonly></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
