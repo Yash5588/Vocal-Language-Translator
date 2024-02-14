@@ -26,37 +26,6 @@ def text_to_text_translation(desired_language,text):
     translated_text = translation["data"]["translatedText"]
     return translated_text
 
-
-def speech_to_speech_translation(desired_language):
-    print("PLEASE WAIT FOR A MOMENT TO SPEAK")
-
-
-    url = "https://text-translator2.p.rapidapi.com/translate"
-    headers = {
-        "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "0f491a5108mshbe7b62a9976bafbp15461ejsn7894515d0926",
-        "X-RapidAPI-Host": "text-translator2.p.rapidapi.com",
-    }
-    if query:
-        data = {
-            "source_language": "auto",
-            "target_language": desired_language,
-            "text": query,
-        }
-        response = requests.post(url, data=data, headers=headers)
-        translation = response.json()
-        translated_text = translation["data"]["translatedText"]
-        print("Translation:", translated_text)
-        obj = gTTS(text=translated_text, lang=desired_language, slow=False)
-        mp3_file = "transpeech.mp3"
-        obj.save(mp3_file)
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound(mp3_file)
-        sound.play()
-        time.sleep(sound.get_length())
-        
-
-
 def speech_to_text_recognition(desired_language,text):
     translated_text = text_to_text_translation(desired_language,text)
     return translated_text
