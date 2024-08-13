@@ -76,5 +76,5 @@ def submit():
 
 urll = "http://127.0.0.1:5000"
 webbrowser.open(urll)
-app.run(debug=True)
+app.run(debug=True,host = '0.0.0.0')
 
